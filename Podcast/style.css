@@ -1,0 +1,14 @@
+html{
+    width: 1000px;
+    height: 350px;
+}
+img{
+    margin-top: 70px;
+    margin-left: 575px;
+}
+table{
+    margin-left: 510px;
+    padding: 40px; 
+    background-color: #dbdbdb;
+    border-radius: 10px 10px 10px 10px;
+}
