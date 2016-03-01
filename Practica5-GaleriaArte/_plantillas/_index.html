@@ -1,0 +1,78 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Art Gallery</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <!-- Styles -->
+    <link href="https://fonts.googleapis.com/css?family=Pacifico" rel="stylesheet" type="text/css">
+    <link href="assets/css/bootstrap.css" rel="stylesheet">
+    <link href="assets/css/font-awesome.css" rel="stylesheet">
+    <link href="assets/css/photographer.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="assets/js/shadowbox/shadowbox.css">
+    <link rel="stylesheet" type="text/css" href="assets/css/main.css">
+    <!-- HTML5 shim -->
+    <!--[if lt IE 9]>
+	    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <style type="text/css"></style>
+</head>
+<body>
+    <div class="masthead clearfix">
+        <div class="container">
+            <div class="logo pull-left">Art Gallery</div>
+            <div class="pull-right">
+                <a href="pages/singin.php" id="openPopUp" class="logo pull-left btn btn-info btn-lg">Login</a>
+                <a href="pages/signup.php" id="regis" class="logo pull-left btn btn-info btn-lg">Register</a>
+                <!-- your email address -->
+            </div>
+        </div>
+    </div>
+    
+    <div class="container">
+        {filtrado}
+        {contenido_galeria}
+    </div>
+
+    <!-- Javascript -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+    <script type="text/javascript" src="assets/js/shadowbox/shadowbox.js"></script>
+    <script type="text/javascript" src="assets/js/jquery.easing.js"></script>
+    <script type="text/javascript" src="assets/js/jquery.quicksand.js"></script>
+    <script src="assets/js/photographer.js"></script>
+    <script src="assets/js/bootstrap.js"></script>
+
+    <div id="sb-container">
+        <div id="sb-overlay"></div>
+        <div id="sb-wrapper">
+            <div id="sb-title">
+                <div id="sb-title-inner"></div>
+            </div>
+            <div id="sb-wrapper-inner">
+                <div id="sb-body">
+                    <div id="sb-body-inner"></div>
+                    <div id="sb-loading">
+                        <div id="sb-loading-inner"><span>loading</span></div>
+                    </div>
+                </div>
+            </div>
+            <div id="sb-info">
+                <div id="sb-info-inner">
+                    <div id="sb-counter"></div>
+                    <div id="sb-nav">
+                        <a id="sb-nav-close" title="Close" onclick="Shadowbox.close()"></a>
+                        <a id="sb-nav-next" title="Next" onclick="Shadowbox.next()"></a>
+                        <a id="sb-nav-play" title="Play" onclick="Shadowbox.play()"></a>
+                        <a id="sb-nav-pause" title="Pause" onclick="Shadowbox.pause()"></a>
+                        <a id="sb-nav-previous" title="Previous" onclick="Shadowbox.previous()"></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>
