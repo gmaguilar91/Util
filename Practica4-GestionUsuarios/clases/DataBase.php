@@ -50,7 +50,6 @@ class DataBase {
         foreach ($parametros as $nombreParametro => $valorParametro) {
             $this->consulta->bindValue($nombreParametro, $valorParametro);
         }
-        //var_dump($this->consulta);
         return $this->consulta->execute();
     }
 
@@ -65,7 +64,7 @@ class DataBase {
 
     function count($tabla, $condicion = "1 = 1", $parametros = array()) {
         $sql = "select count(*) from $tabla where $condicion";
-echo "<br/><br/>".$sql."<br/><br/>";
+
         $this->send($sql, $parametros);
 
         $fila = $this->getRow();
@@ -94,8 +93,6 @@ echo "<br/><br/>".$sql."<br/><br/>";
 
         $sql = "delete from $tabla where $camposWhere";
 
-//        echo "<br/> delete: $sql <br/>";
-
         if ($this->send($sql, $parametros)) {
             return $this->getCount();
         }
@@ -112,7 +109,7 @@ echo "<br/><br/>".$sql."<br/><br/>";
         $campos = substr($campos, 0, -1);
         $valores = substr($valores, 0, -1);
         $sql = "insert into $tabla ($campos) values ($valores)";
-//echo "<br/><br/>sql: ".$sql."<br/><br/>";
+
         if ($this->send($sql, $parametros)) {
             if ($auto) {
                 return $this->getId();
@@ -146,7 +143,6 @@ echo "<br/><br/>".$sql."<br/><br/>";
         $camposWhere = substr($camposWhere, 0, -4);
 
         $sql = "update $tabla set $camposSet where $camposWhere";
-//        echo "<br/>SQL en DATABASE para UPDATE: " . $sql ."<br/>";
 
         if ($this->send($sql, $parametros)) {
             return $this->getCount();

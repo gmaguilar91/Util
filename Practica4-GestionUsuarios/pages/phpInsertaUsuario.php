@@ -1,12 +1,14 @@
 <?php
 
+require '../clases/Google/autoload.php';
+require '../clases/PHPMailer.php';
 require '../clases/AutoCarga.php';
 
 $bd = new DataBase();
 $gestor = new ManageUsuario($bd);
 
 $email = Request::post("email");
-$password = Request::post("contrasena");
+$password = Request::post("validaContrasena");
 $strPos = strpos($email, "@");
 $alias = substr($email, 0, $strPos);
 
@@ -17,14 +19,28 @@ $sqlResultado = $gestor->count("alias like '" . $alias . "'");
 $sesion = new Session();
 
 if ($sqlResultado[0] == 0) {
-    $sesion->set("AliasUsuario", $alias);
     $usuario = new Usuario($email, $passEncriptada, $alias);
 
-    $gestor->insert($usuario);
-    //$sesion->sendRedirect("envioCorreo.php");
-    echo "<br/> Usuario introducido en la base de datos satisfactoriamente.";
-} else {
-    echo "<br/>Usuario ya registrado.";
+    $resultado = $gestor->insert($usuario);
+    
+    $claveActivacion = sha1($passEncriptada + Constants::SEMILLA);
+    
+    $correo = new Correo();
+    
+    $destino = $email;
+    $asunto = "Activación de su cuenta";
+    $mensaje = "Este es un correo de activación.
+    
+Diríjase a la siguiente URL para activar su cuenta: https://practica4-gmaguilar91.c9users.io/pages/phpActivate.php?activate=$claveActivacion&email=$email";
+    
+    $correo->setDestino($destino);
+    $correo->setAsunto($asunto);
+    $correo->setMensaje($mensaje);
+    
+    $correo->send();
     $sesion->destroy();
-    $sesion->sendRedirect("../index.php");
+    $sesion->sendRedirect("sent.html");
+} else {
+    $sesion->destroy();
+    $sesion->sendRedirect("userExist.html");
 }

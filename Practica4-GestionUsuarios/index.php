@@ -1,3 +1,8 @@
+<?php
+require 'clases/AutoCarga.php';
+$sesion = new Session();
+?>
+
 <!DOCTYPE html>
 <html lang="en" class="app">
 <head>  

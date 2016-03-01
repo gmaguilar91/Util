@@ -10,16 +10,19 @@ $sesion = new Session();
 
 $email = Request::post("email");
 $pass = Request::post("password");
+
 $strPos = strpos($email, "@");
 $alias = substr($email, 0, $strPos);
+
 $admin = Request::post("admin");
 $personal = Request::post("personal");
 $activo = Request::post("activo");
 
 
 /*
- * ComprobaciÃ³n de los datos pasados en los checkbox 
+ * Comprobacion de los datos pasados en los checkbox 
  */
+ 
 if ($admin === null) {
     $admin = 0;
 } else if ($admin === "on") {
@@ -38,7 +41,6 @@ if ($activo === null) {
     $activo = 1;
 }
 
-/* * ** EncriptaciÃ³n de la contraseÃ±a *** */
 
 $passEncriptada = sha1($pass);
 
@@ -79,7 +81,7 @@ if ($sqlResultado[0] == 0) {
     echo "<br/> Usuario introducido en la base de datos satisfactoriamente.";
 } else {
     echo "<br/>Usuario ya registrado.";
-    $sesion->sendRedirect("tableAdmin.php");
+    //$sesion->sendRedirect("tableAdmin.php"); Esto hay que arreglarlo porque no redirige bien, culpa del c9 me temo
     /* $sesion->destroy();
       $sesion->sendRedirect("../index.php"); */
 }

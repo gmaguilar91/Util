@@ -61,9 +61,9 @@ class ManageUsuario {
         $parametrosSet['clave'] = $usuario->getClave();
         $parametrosSet['alias'] = $usuario->getAlias();
         $parametrosSet['activo'] = $usuario->getActivo();
-        $parametrosSet['admin'] = $usuario->getAdministrador();
+        $parametrosSet['administrador'] = $usuario->getAdministrador();
         $parametrosSet['personal'] = $usuario->getPersonal();
-        $parametrosSet['avatar'] = $usuario->getAvatar();
+        $parametrosSet['imagen'] = $usuario->getAvatar();
 
         $parametrosWhere['email'] = $pkEmail;
 
@@ -79,7 +79,7 @@ class ManageUsuario {
 
         $parametrosSet['email'] = $usuario->getEmail();
         $parametrosSet['clave'] = $usuario->getClave();
-        $parametrosSet['avatar'] = $usuario->getAvatar();
+        $parametrosSet['imagen'] = $usuario->getAvatar();
 
         $parametrosWhere['alias'] = $pkAlias;
 
@@ -96,15 +96,14 @@ class ManageUsuario {
         $parametros['clave'] = $usuario->getClave();   /* REGISTRO */
         $parametros['alias'] = $usuario->getAlias();   /* REGISTRO */
         $parametros['activo'] = $usuario->getActivo(); /* DEFAULT 0 */
-        $parametros['admin'] = $usuario->getAdministrador(); /* DEFAULT 0 */
+        $parametros['administrador'] = $usuario->getAdministrador(); /* DEFAULT 0 */
         $parametros['personal'] = $usuario->getPersonal(); /* DEFAULT 0 */
-        $parametros['avatar'] = $usuario->getAvatar(); /* DEFAULT "" */
+        $parametros['imagen'] = $usuario->getAvatar(); /* DEFAULT "" */
 
-        return($this->bd->insert($this->tabla, $parametros));
+        return $this->bd->insert($this->tabla, $parametros);
     }
 
     function getList($pagina = 1, $orden = "", $nrpp = Constants::NRPP) {
-        //Valor predeterminado -> Constante, si se lo paso, coge el valor.
 
         $ordenPredeterminado = "$orden, alias, email";
 
@@ -125,7 +124,31 @@ class ManageUsuario {
             $r[] = $usuario;
         }
 
-        return $r; //Devuelve un array de directores.
+        return $r;
+    }
+    
+    function getListPersonal($pagina = 1, $orden = "", $nrpp = Constants::NRPP) {
+
+        $ordenPredeterminado = "$orden, alias, email";
+
+        if ($orden === "" || $orden === null) {
+            $ordenPredeterminado = "alias, email";
+        }
+
+        $registroInicial = ($pagina - 1) * $nrpp;
+
+        $this->bd->select($this->tabla, "*", "administrador not like 1", array(), $ordenPredeterminado, " $registroInicial, $nrpp");
+
+        $r = array();
+
+        while ($fila = $this->bd->getRow()) {
+            $usuario = new Usuario();
+            $usuario->set($fila);
+
+            $r[] = $usuario;
+        }
+
+        return $r;
     }
 
     function getValuesSelect() {

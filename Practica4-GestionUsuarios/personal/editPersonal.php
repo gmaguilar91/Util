@@ -10,7 +10,20 @@ $avatar = $usuario->getAvatar();
 $email = $usuario->getEmail();
 $alias = $usuario->getAlias();
 
+$editEmail = Request::post("edit");
+$bd = new DataBase();
+$gestor = new ManageUsuario($bd);
+$user = $gestor->get($editEmail);
+$activo = $user->getActivo();
+
+function seleccionar($parametro) {
+    if ($parametro == 1) {
+        echo 'checked="checked"';
+    }
+}
 ?>
+
+<!DOCTYPE html>
 <html lang="en" class="app">
     <head>  
         <meta charset="utf-8" />
@@ -23,7 +36,7 @@ $alias = $usuario->getAlias();
         <link rel="stylesheet" href="../css/icon.css" type="text/css" />
         <link rel="stylesheet" href="../css/font.css" type="text/css" />
         <link rel="stylesheet" href="../css/app.css" type="text/css" />  
-        <link rel="stylesheet" href="../js/intro/introjs.css" type="text/css" />
+        <link rel="stylesheet" href="../js/datatables/datatables.css" type="text/css"/>
         <!--[if lt IE 9]>
           <script src="../js/ie/html5shiv.js"></script>
           <script src="../js/ie/respond.min.js"></script>
@@ -37,7 +50,7 @@ $alias = $usuario->getAlias();
                     <a class="btn btn-link visible-xs" data-toggle="class:nav-off-screen" data-target="#nav">
                         <i class="fa fa-bars"></i>
                     </a>
-                    <a href="profileUser.php" class="navbar-brand">
+                    <a href="profilePersonal.php" class="navbar-brand">
                         <img src="../images/logo.png" class="m-r-sm" alt="scale">
                         <span class="hidden-nav-xs">Scale</span>
                     </a>
@@ -59,12 +72,12 @@ $alias = $usuario->getAlias();
                                 <a href="#">Settings</a>
                             </li>
                             <li>
-                                <a href="profileUser.php">Profile</a>
+                                <a href="profilePersonal.php">Profile</a>
                             </li>
 
                             <li class="divider"></li>
                             <li>
-                                <a href="index.php">Logout</a>
+                                <a href="../index.php">Logout</a>
                             </li>
                         </ul>
                     </li>
@@ -98,22 +111,24 @@ $alias = $usuario->getAlias();
                                                     <a href="#">Settings</a>
                                                 </li>
                                                 <li>
-                                                    <a href="profileUser.php">Profile</a>
+                                                    <a href="profilePersonal.php">Profile</a>
                                                 </li>
 
                                                 <li class="divider"></li>
                                                 <li>
-                                                    <a href="index.php">Logout</a>
+                                                    <a href="../index.php">Logout</a>
                                                 </li>
                                             </ul>
                                         </div>
                                     </div>                
+
+
                                     <!-- nav -->                 
                                     <nav class="nav-primary hidden-xs">
                                         <ul class="nav nav-main" data-ride="collapse">
                                             <li  class="active">
-                                                <a href="profileUser.php" class="auto">
-                                                    <i class="i i-statistics icon">
+                                                <a href="profilePersonal.php" class="auto">
+                                                    <i class="i i-statistics">
                                                     </i>
                                                     <span class="font-bold">Home</span>
                                                 </a>
@@ -130,7 +145,7 @@ $alias = $usuario->getAlias();
                                                 </a>
                                                 <ul class="nav dk">
                                                     <li >
-                                                        <a href="tableUser.php" class="auto">                            
+                                                        <a href="tablePersonal.php" class="auto">                            
                                                             <span class="pull-right text-muted">
                                                                 <i class="i i-circle-sm-o text"></i>
                                                                 <i class="i i-circle-sm text-active"></i>
@@ -152,13 +167,13 @@ $alias = $usuario->getAlias();
                                                 </a>
                                                 <ul class="nav dk">
                                                     <li >
-                                                        <a href="profileUser.php" class="auto">
+                                                        <a href="profilePersonal.php" class="auto">
                                                             <i class="i i-dot"></i>
                                                             <span>Profile</span>
                                                         </a>
                                                     </li>
                                                     <li >
-                                                        <a href="introUser.php" class="auto">
+                                                        <a href="introPersonal.php" class="auto">
                                                             <i class="i i-dot"></i>
                                                             <span>Intro</span>
                                                         </a>
@@ -172,7 +187,7 @@ $alias = $usuario->getAlias();
                             </section>
 
                             <footer class="footer hidden-xs no-padder text-center-nav-xs">
-                                <a href="index.php" class="btn btn-icon icon-muted btn-inactive pull-right m-l-xs m-r-xs hidden-nav-xs">
+                                <a href="../index.php" class="btn btn-icon icon-muted btn-inactive pull-right m-l-xs m-r-xs hidden-nav-xs">
                                     <i class="i i-logout"></i>
                                 </a>
                                 <a href="#nav" data-toggle="class:nav-xs" class="btn btn-icon icon-muted btn-inactive m-l-xs m-r-xs">
@@ -185,42 +200,83 @@ $alias = $usuario->getAlias();
                     <!-- /.aside -->
                     <section id="content">
                         <section class="vbox">
-                            <header class="header bg-white b-b b-light">
-                                <p>This is a header</p>
-                            </header>
-                            <section>
-                                <section class="hbox stretch">
-                                    <section>
-                                        <section class="vbox">
-                                            <section  class="scrollable wrapper">                    
-                                                <p class="h4">Contents...</p>
-                                            </section>
-                                        </section>
-                                    </section>
-                                    <aside class="bg-light dker  b-l aside-md">
-                                        <div class="wrapper dker" id="aside">
-                                            This is a aside content
-                                        </div>
-                                    </aside>
-                                </section>                  
+                            <section class="scrollable padder">
+                                <br/>
+                                <section class="panel panel-default">
+                                    <header class="panel-heading font-bold">Update user</header>
+                                    <div class="panel-body">
+                                        <form class="bs-example form-horizontal" action="phpUpdatePersonal.php" method="post" enctype="multipart/form-data">
+                                            <div class="form-group">
+                                                <label class="col-lg-2 control-label">Email</label>
+                                                <div class="col-lg-10">
+                                                    <input class="form-control" type="email" placeholder="Email" id="email" name="email" value="<?php echo $user->getEmail(); ?>">
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label class="col-lg-2 control-label">Password</label>
+                                                <div class="col-lg-10">
+                                                    <input class="form-control" type="password" placeholder="Password" id="contrasena" name="contrasena" value="">
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label class="col-lg-2 control-label">Alias</label>
+                                                <div class="col-lg-10">
+                                                    <input class="form-control" type="text" placeholder="Alias" id="alias" name="alias" value="<?php echo $user->getAlias(); ?>">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-sm-2 control-label">Permissions</label>
+                                                <div class="col-sm-10">
+                                                    <label class="checkbox-inline i-checks">
+                                                        <input type="checkbox" id="activo" name="activo" <?php seleccionar($user->getActivo()); ?> ><i></i>Active
+                                                    </label>
+                                                    <label class="checkbox-inline i-checks">
+                                                        <input type="checkbox" id="admin" name="admin" <?php seleccionar($user->getAdministrador()); ?> disabled/><i></i>Admin
+                                                    </label>
+                                                    <label class="checkbox-inline i-checks">
+                                                        <input type="checkbox" id="personal" name="personal" <?php seleccionar($user->getPersonal()); ?>/><i></i>Staff
+                                                    </label>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label class="col-sm-2 control-label">Upload Avatar</label>
+                                                <div class="col-sm-10">
+                                                    <input type="file" class="filestyle" data-icon="false" data-classButton="btn btn-default" data-classInput="form-control inline v-middle input-s"  id="avatarNuevo" name="avatarNuevo" accept="image/*">
+                                                </div>
+                                            </div>
+                                            <br>
+                                            <input type="hidden" value="<?php echo $user->getEmail(); ?>" name="pkEmail" id="pkEmail">
+                                            <div class="form-group">
+                                                <div class="col-lg-offset-2 col-lg-10">
+                                                    <button type="submit" class="btn btn-sm btn-default">Edit my profile</button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </section>
                             </section>
-                            <footer class="footer bg-white b-t b-light">
-                                <p>This is a footer</p>
-                            </footer>
+
                         </section>
-                        <a href="#" class="hide nav-off-screen-block" data-toggle="class:nav-off-screen" data-target="#nav"></a>
                     </section>
+                    <a href="#" class="hide nav-off-screen-block" data-toggle="class:nav-off-screen" data-target="#nav"></a>
                 </section>
             </section>
         </section>
-        <script src="../js/jquery.min.js"></script>
-        <!-- Bootstrap -->
-        <script src="../js/bootstrap.js"></script>
-        <!-- App -->
-        <script src="../js/app.js"></script>  
-        <script src="../js/slimscroll/jquery.slimscroll.min.js"></script>
-        <script src="../js/intro/intro.min.js"></script>
-        <script src="../js/intro/demo.js"></script>
-        <script src="../js/app.plugin.js"></script>
-    </body>
+    </section>
+    <script src="../js/jquery.min.js"></script>
+    <!-- Bootstrap -->
+    <script src="../js/bootstrap.js"></script>
+    <!-- App -->
+    <script src="../js/app.js"></script>  
+    <script src="../js/slimscroll/jquery.slimscroll.min.js"></script>
+    <!-- datatables -->
+    <script src="../js/datatables/jquery.dataTables.min.js"></script>
+    <script src="../js/datatables/jquery.csv-0.71.min.js"></script>
+    <script src="../js/datatables/demo.js"></script>
+    <script src="../js/app.plugin.js"></script>
+    <script src="../js/script.js"></script>
+</body>
 </html>

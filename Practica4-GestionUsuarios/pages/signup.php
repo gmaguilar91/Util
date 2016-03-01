@@ -40,7 +40,6 @@
             </div>
           </div>
           <div>
-          Inicio sesion google
           </div>
           <button type="submit" class="btn btn-lg btn-primary btn-block" id="registrarse">Sign up</button>
           <div class="line line-dashed"></div>
