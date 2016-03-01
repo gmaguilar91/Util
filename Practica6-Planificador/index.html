@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Tasks</title>
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/estilo.css">
+    <link rel="stylesheet" href="css/app.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="css/sweetalert2.css">
+</head>
+
+<body class="fondo">
+
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4 col-centered">
+                <div id="divLogin" class="panel panel-default mostrar">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Log in</h3>
+                    </div>
+                    <div class="panel-body">
+                        <div class="mostrar">
+                            <div class="form-group">
+                                <input id="email" class="form-control" placeholder="Email" name="email" type="email" autofocus>
+                            </div>
+                            <div class="form-group">
+                                <input id="clave" class="form-control" placeholder="Password" name="password" type="password" value="">
+                                <div id="mensajeError" class="ocultar">
+                                    <br/>
+                                    <span>The user or email entered is incorrect.</span>
+                                </div>
+                            </div>
+                            <input type="button" id="btLogin" value="Log in" class="btn btn-lg btn-success btn-block" />
+                        </div>
+                    </div>
+                </div>
+                <div id="divRespuesta" class="panel panel-default ocultar col-left">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Logged</h3>
+                    </div>
+                    <div class="panel-body">
+                        <p>¡Hello <strong id="nom_user_login"></strong>!</p>
+                        <input type="button" id="btLogout" value="Log Out" class="btn btn-lg btn-danger btn-block" />
+                    </div>
+                </div>
+
+                <div id="divOperaciones" class="panel panel-default ocultar col-right">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Add Event</h3>
+                    </div>
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <label>Day:</label>
+                            <select id="select_dia" class="form-control">
+                                <option id="l">Monday</option>
+                                <option id="m">Tuesday</option>
+                                <option id="w">Wednesday</option>
+                                <option id="j">Thursday</option>
+                                <option id="v">Friday</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Hour:</label>
+                            <select id="select_hora" class="form-control">
+                                <option id="8">8:00 - 9:00</option>
+                                <option id="9">9:00 - 10:00</option>
+                                <option id="10">10:00 - 11:00</option>
+                                <option id="11">11:00 - 11:00</option>
+                                <option id="12">12:00 - 13:00</option>
+                                <option id="13">13:00 - 14:00</option>
+                                <option id="14">14:00 - 15:00</option>
+                                <option id="15">15:00 - 16:00</option>
+                                <option id="16">16:00 - 17:00</option>
+                                <option id="17">17:00 - 18:00</option>
+                                <option id="18">18:00 - 19:00</option>
+                                <option id="19">19:00 - 20:00</option>
+                                <option id="20">20:00 - 21:00</option>
+                                <option id="21">21:00 - 22:00</option>
+                                <option id="22">22:00 - 23:00</option>
+                                <option id="23">23:00 - 24:00</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                        </div>
+                        <input type="button" id="btAdd" value="Add Event" class="btn btn-lg btn-primary btn-block" />
+                        <input type="text" id="emailHidden" value="" hidden/>
+                        <input type="text" id="nombreHidden" value="" hidden/>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-12">
+                <h2>Tasks</h2>
+                <div class="table-responsive">
+                    <table class="table table-bordered table-hover table-striped white">
+                        <thead>
+                            <tr>
+                                <th>Hours</th>
+                                <th>Monday</th>
+                                <th>Tuesday</th>
+                                <th>Wednesday</th>
+                                <th>Thursday</th>
+                                <th>Friday</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>8:00 - 9:00</td>
+                                <td id="l8"></td>
+                                <td id="m8"></td>
+                                <td id="w8"></td>
+                                <td id="j8"></td>
+                                <td id="v8"></td>
+                            </tr>
+                            <tr>
+                                <td>9:00 - 10:00</td>
+                                <td id="l9"></td>
+                                <td id="m9"></td>
+                                <td id="w9"></td>
+                                <td id="j9"></td>
+                                <td id="v9"></td>
+                            </tr>
+                            <tr>
+                                <td>10:00 - 11:00</td>
+                                <td id="l10"></td>
+                                <td id="m10"></td>
+                                <td id="w10"></td>
+                                <td id="j10"></td>
+                                <td id="v10"></td>
+                            </tr>
+                            <tr>
+                                <td>11:00 - 12:00</td>
+                                <td id="l11"></td>
+                                <td id="m11"></td>
+                                <td id="w11"></td>
+                                <td id="j11"></td>
+                                <td id="v11"></td>
+                            </tr>
+                            <tr>
+                                <td>12:00 - 13:00</td>
+                                <td id="l12"></td>
+                                <td id="m12"></td>
+                                <td id="w12"></td>
+                                <td id="j12"></td>
+                                <td id="v12"></td>
+                            </tr>
+                            <tr>
+                                <td>13:00 - 14:00</td>
+                                <td id="l13"></td>
+                                <td id="m13"></td>
+                                <td id="w13"></td>
+                                <td id="j13"></td>
+                                <td id="v13"></td>
+                            </tr>
+                            <tr>
+                                <td>14:00 - 15:00</td>
+                                <td id="l14"></td>
+                                <td id="m14"></td>
+                                <td id="w14"></td>
+                                <td id="j14"></td>
+                                <td id="v14"></td>
+                            </tr>
+                            <tr>
+                                <td>15:00 - 16:00</td>
+                                <td id="l15"></td>
+                                <td id="m15"></td>
+                                <td id="w15"></td>
+                                <td id="j15"></td>
+                                <td id="v15"></td>
+                            </tr>
+                            <tr>
+                                <td>16:00 - 17:00</td>
+                                <td id="l16"></td>
+                                <td id="m16"></td>
+                                <td id="w16"></td>
+                                <td id="j16"></td>
+                                <td id="v16"></td>
+                            </tr>
+                            <tr>
+                                <td>17:00 - 18:00</td>
+                                <td id="l17"></td>
+                                <td id="m17"></td>
+                                <td id="w17"></td>
+                                <td id="j17"></td>
+                                <td id="v17"></td>
+                            </tr>
+                            <tr>
+                                <td>18:00 - 19:00</td>
+                                <td id="l18"></td>
+                                <td id="m18"></td>
+                                <td id="w18"></td>
+                                <td id="j18"></td>
+                                <td id="v18"></td>
+                            </tr>
+                            <tr>
+                                <td>19:00 - 20:00</td>
+                                <td id="l19"></td>
+                                <td id="m19"></td>
+                                <td id="w19"></td>
+                                <td id="j19"></td>
+                                <td id="v19"></td>
+                            </tr>
+                            <tr>
+                                <td>20:00 - 21:00</td>
+                                <td id="l20"></td>
+                                <td id="m20"></td>
+                                <td id="w20"></td>
+                                <td id="j20"></td>
+                                <td id="v20"></td>
+                            </tr>
+                            <tr>
+                                <td>21:00 - 22:00</td>
+                                <td id="l21"></td>
+                                <td id="m21"></td>
+                                <td id="w21"></td>
+                                <td id="j21"></td>
+                                <td id="v21"></td>
+                            </tr>
+                            <tr>
+                                <td>22:00 - 23:00</td>
+                                <td id="l22"></td>
+                                <td id="m22"></td>
+                                <td id="w22"></td>
+                                <td id="j22"></td>
+                                <td id="v22"></td>
+                            </tr>
+                            <tr>
+                                <td>23:00 - 24:00</td>
+                                <td id="l23"></td>
+                                <td id="m23"></td>
+                                <td id="w23"></td>
+                                <td id="j23"></td>
+                                <td id="v23"></td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/ajax.js"></script>
+    <script src="js/method.ajax.js"></script>
+    <script src="js/sweetalert2.min.js"></script> 
+</body>
+
+</html>
